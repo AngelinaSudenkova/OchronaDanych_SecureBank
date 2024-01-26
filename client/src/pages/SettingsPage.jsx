@@ -28,7 +28,6 @@ const SettingPage = () => {
       const resp = await httpClient.get("//localhost/api/@me")
       setUser(resp.data);}
       catch (error){
-         console.log("Not authenticated")
       }
     })();
   }, []);
@@ -38,7 +37,6 @@ const SettingPage = () => {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };
@@ -53,7 +51,6 @@ const SettingPage = () => {
         setCardNumber(cardResponse.data.card_number);
         setCVV(cardResponse.data.cvv);
       } catch (error) {
-        console.error('Error fetching card data:', error);
         setError('An error occurred while fetching your card information.');
       }
     })();
@@ -85,7 +82,6 @@ const SettingPage = () => {
           setError('Failed to change password');
       }
   } catch (error) {
-      //setError('An error occurred');
       const errorMessage = error.response.data.error;
       setError(errorMessage);
   }

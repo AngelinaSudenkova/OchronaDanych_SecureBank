@@ -24,7 +24,6 @@ function LoginPage() {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };
@@ -60,7 +59,6 @@ function LoginPage() {
             navigate('/otp', { state: { keyCombination: resp.data.combination, email: email } });
         } catch (error) {
             setEmailError("Something went wrong");
-            console.error("An unexpected error occurred:", error);
         }
     } else {
         setEmailError('Please enter a valid email address.');

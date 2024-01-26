@@ -35,7 +35,6 @@ function OtpInputWithValidation({numberOfDigits}) {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };

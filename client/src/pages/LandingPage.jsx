@@ -13,11 +13,10 @@ const LandingPage = () => {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };
-  useEffect(() => {
+  useEffect(() => { 
         getCsrfToken();
       }, []);
 
@@ -36,7 +35,6 @@ const LandingPage = () => {
       const resp = await httpClient.get("//localhost/api/@me")
       setUser(resp.data);}
       catch (error){
-         console.log("Not authenticated")
       }
     })();
   }, []);

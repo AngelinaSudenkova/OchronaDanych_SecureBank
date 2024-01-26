@@ -34,7 +34,6 @@ function DashboardPage() {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };
@@ -58,7 +57,6 @@ function DashboardPage() {
         setCardNumber(cardResponse.data.card_number);
         setCVV(cardResponse.data.cvv);
       } catch (error) {
-        console.error('Error fetching card data:', error);
         setError('An error occurred while fetching your card information.');
       }
     })();
@@ -87,7 +85,6 @@ function DashboardPage() {
         setError(response.data.error);
       }
     } catch (error) {
-      console.error('Transaction error:', error);
       setError('An error occurred while sending the transaction.');
     }
   };

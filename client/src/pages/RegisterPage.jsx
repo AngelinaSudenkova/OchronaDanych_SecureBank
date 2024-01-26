@@ -15,7 +15,6 @@ function RegisterPage() {
             const response = await httpClient.get("//localhost/api/csrf-token");
             setCsrfToken(response.data.token)
           } catch (error) {
-            console.error("Error fetching CSRF token:", error);
             return "";
           }
         };
@@ -48,7 +47,6 @@ function RegisterPage() {
         const errorMessage = error.response.data.error;
         setErrorMessage(errorMessage);
       } else {
-        console.error('Registration failed:', error);
         setErrorMessage('Registration failed. Please try again.');
       }
     }

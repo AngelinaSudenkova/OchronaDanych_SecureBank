@@ -8,6 +8,9 @@ from sqlalchemy.ext.mutable import MutableList
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
+from dotenv import load_dotenv
+
+load_dotenv()
 
 db = SQLAlchemy()
 
@@ -16,7 +19,7 @@ BLOCK_SIZE = 16
 # Key + IV generation
 key1 = os.environ.get("key1", os.urandom(16))
 key2 = os.environ.get("key2", os.urandom(16))
-iv = os.urandom(16)  
+iv = bytes.fromhex(os.environ.get("iv")) 
 
 
 def get_uuid():
@@ -24,17 +27,21 @@ def get_uuid():
 
 
 def encrypt_data(data):
-    cipher1 = AES.new(key1, AES.MODE_CBC, iv)
+    key1_enc = bytes.fromhex(key1)
+    key2_enc=bytes.fromhex(key2)
+    cipher1 = AES.new(key1_enc, AES.MODE_CBC, iv)
     encrypted_data = cipher1.encrypt(pad(data.encode(), BLOCK_SIZE))
-    cipher2 = AES.new(key2, AES.MODE_CBC, iv)
+    cipher2 = AES.new(key2_enc, AES.MODE_CBC, iv)
     double_encrypted_data = cipher2.encrypt(encrypted_data)
     return double_encrypted_data
 
 
 def decrypt_data(data):
-    cipher2 = AES.new(key2, AES.MODE_CBC, iv)
+    key1_enc = bytes.fromhex(key1)
+    key2_enc=bytes.fromhex(key2)
+    cipher2 = AES.new(key2_enc, AES.MODE_CBC, iv)
     decrypted_data = cipher2.decrypt(data)
-    cipher1 = AES.new(key1, AES.MODE_CBC, iv)
+    cipher1 = AES.new(key1_enc, AES.MODE_CBC, iv)
     double_decrypted_data = unpad(cipher1.decrypt(decrypted_data), BLOCK_SIZE)
     return double_decrypted_data.decode()
 

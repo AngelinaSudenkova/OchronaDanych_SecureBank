@@ -16,8 +16,6 @@ services:
 
   frontend:
     build: ./client
-#    volumes:
-#      - ./client:/app
     depends_on:
       - backend
 
